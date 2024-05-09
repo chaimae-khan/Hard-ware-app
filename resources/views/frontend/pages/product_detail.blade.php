@@ -17,33 +17,33 @@
 @section('title','E-SHOP || PRODUCT DETAIL')
 @section('main-content')
 
-		<!-- Breadcrumbs -->
+		<!-- Miettes de pain -->
 		<div class="breadcrumbs">
 			<div class="container">
 				<div class="row">
 					<div class="col-12">
 						<div class="bread-inner">
 							<ul class="bread-list">
-								<li><a href="{{route('home')}}">Home<i class="ti-arrow-right"></i></a></li>
-								<li class="active"><a href="">Shop Details</a></li>
+								<li><a href="{{route('home')}}">Accueil<i class="ti-arrow-right"></i></a></li>
+								<li class="active"><a href="">Détails de la boutique</a></li>
 							</ul>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<!-- End Breadcrumbs -->
+		<!-- Fin des miettes de pain -->
 				
-		<!-- Shop Single -->
+		<!-- Boutique individuelle -->
 		<section class="shop single section">
 					<div class="container">
 						<div class="row"> 
 							<div class="col-12">
 								<div class="row">
 									<div class="col-lg-6 col-12">
-										<!-- Product Slider -->
+										<!-- Curseur de produit -->
 										<div class="product-gallery">
-											<!-- Images slider -->
+											<!-- Curseur d'images -->
 											<div class="flexslider-thumbnails">
 												<ul class="slides">
 													@php 
@@ -57,9 +57,9 @@
 													@endforeach
 												</ul>
 											</div>
-											<!-- End Images slider -->
+											<!-- Fin du curseur d'images -->
 										</div>
-										<!-- End Product slider -->
+										<!-- Fin du curseur de produit -->
 									</div>
 									<div class="col-lg-6 col-12">
 										<div class="product-des">
@@ -79,7 +79,7 @@
 																@endif
 															@endfor
 													</ul>
-													<a href="#" class="total-review">({{$product_detail['getReview']->count()}}) Review</a>
+													<a href="#" class="total-review">({{$product_detail['getReview']->count()}}) Avis</a>
                                                 </div>
                                                 @php 
                                                     $after_discount=($product_detail->price-(($product_detail->price*$product_detail->discount)/100));
@@ -87,22 +87,11 @@
 												<p class="price"><span class="discount">${{number_format($after_discount,2)}}</span><s>${{number_format($product_detail->price,2)}}</s> </p>
 												<p class="description">{!!($product_detail->summary)!!}</p>
 											</div>
-											<!--/ End Description -->
-											<!-- Color -->
-											{{-- <div class="color">
-												<h4>Available Options <span>Color</span></h4>
-												<ul>
-													<li><a href="#" class="one"><i class="ti-check"></i></a></li>
-													<li><a href="#" class="two"><i class="ti-check"></i></a></li>
-													<li><a href="#" class="three"><i class="ti-check"></i></a></li>
-													<li><a href="#" class="four"><i class="ti-check"></i></a></li>
-												</ul>
-											</div> --}}
-											<!--/ End Color -->
-											<!-- Size -->
+											<!--/ Fin de la description -->
+											<!-- Taille -->
 											@if($product_detail->size)
 												<div class="size mt-4">
-													<h4>Size</h4>
+													<h4>Taille</h4>
 													<ul>
 														@php 
 															$sizes=explode(',',$product_detail->size);
@@ -113,6 +102,7 @@
 														@endforeach
 													</ul>
 												</div>
+
 											@endif
 											<!--/ End Size -->
 											<!-- Product Buy -->
@@ -120,8 +110,8 @@
 												<form action="{{route('single-add-to-cart')}}" method="POST">
 													@csrf 
 													<div class="quantity">
-														<h6>Quantity :</h6>
-														<!-- Input Order -->
+														<h6>Quantité :</h6>
+														<!-- Commande d'entrée -->
 														<div class="input-group">
 															<div class="button minus">
 																<button type="button" class="btn btn-primary btn-number" disabled="disabled" data-type="minus" data-field="quant[1]">
@@ -136,21 +126,21 @@
 																</button>
 															</div>
 														</div>
-													<!--/ End Input Order -->
+													<!--/ Fin de la commande d'entrée -->
 													</div>
 													<div class="add-to-cart mt-4">
-														<button type="submit" class="btn">Add to cart</button>
+														<button type="submit" class="btn">Ajouter au panier</button>
 														<a href="{{route('add-to-wishlist',$product_detail->slug)}}" class="btn min"><i class="ti-heart"></i></a>
 													</div>
 												</form>
 
-												<p class="cat">Category :<a href="{{route('product-cat',$product_detail->cat_info['slug'])}}">{{$product_detail->cat_info['title']}}</a></p>
+												<p class="cat">Catégorie :<a href="{{route('product-cat',$product_detail->cat_info['slug'])}}">{{$product_detail->cat_info['title']}}</a></p>
 												@if($product_detail->sub_cat_info)
-												<p class="cat mt-1">Sub Category :<a href="{{route('product-sub-cat',[$product_detail->cat_info['slug'],$product_detail->sub_cat_info['slug']])}}">{{$product_detail->sub_cat_info['title']}}</a></p>
+												<p class="cat mt-1">Sous-catégorie :<a href="{{route('product-sub-cat',[$product_detail->cat_info['slug'],$product_detail->sub_cat_info['slug']])}}">{{$product_detail->sub_cat_info['title']}}</a></p>
 												@endif
 												<p class="availability">Stock : @if($product_detail->stock>0)<span class="badge badge-success">{{$product_detail->stock}}</span>@else <span class="badge badge-danger">{{$product_detail->stock}}</span>  @endif</p>
 											</div>
-											<!--/ End Product Buy -->
+											<!--/ Fin d'achat de produit -->
 										</div>
 									</div>
 								</div>
@@ -158,15 +148,15 @@
 									<div class="col-12">
 										<div class="product-info">
 											<div class="nav-main">
-												<!-- Tab Nav -->
+												<!-- Onglet de navigation -->
 												<ul class="nav nav-tabs" id="myTab" role="tablist">
 													<li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#description" role="tab">Description</a></li>
-													<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#reviews" role="tab">Reviews</a></li>
+													<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#reviews" role="tab">Avis</a></li>
 												</ul>
-												<!--/ End Tab Nav -->
+												<!--/ Fin de l'onglet de navigation -->
 											</div>
 											<div class="tab-content" id="myTabContent">
-												<!-- Description Tab -->
+												<!-- Onglet de description -->
 												<div class="tab-pane fade show active" id="description" role="tabpanel">
 													<div class="tab-single">
 														<div class="row">
@@ -178,20 +168,20 @@
 														</div>
 													</div>
 												</div>
-												<!--/ End Description Tab -->
-												<!-- Reviews Tab -->
+												<!--/ Fin de l'onglet de description -->
+												<!-- Onglet d'avis -->
 												<div class="tab-pane fade" id="reviews" role="tabpanel">
 													<div class="tab-single review-panel">
 														<div class="row">
 															<div class="col-12">
 																
-																<!-- Review -->
+																<!-- Avis -->
 																<div class="comment-review">
 																	<div class="add-review">
-																		<h5>Add A Review</h5>
-																		<p>Your email address will not be published. Required fields are marked</p>
+																		<h5>Ajouter un avis</h5>
+																		<p>Votre adresse e-mail ne sera pas publiée. Les champs obligatoires sont indiqués</p>
 																	</div>
-																	<h4>Your Rating <span class="text-danger">*</span></h4>
+																	<h4>Votre note <span class="text-danger">*</span></h4>
 																	<div class="review-inner">
 																			<!-- Form -->
 																@auth
@@ -203,15 +193,15 @@
                                                                                   <div class="star-rating">
                                                                                     <div class="star-rating__wrap">
                                                                                       <input class="star-rating__input" id="star-rating-5" type="radio" name="rate" value="5">
-                                                                                      <label class="star-rating__ico fa fa-star-o" for="star-rating-5" title="5 out of 5 stars"></label>
+                                                                                      <label class="star-rating__ico fa fa-star-o" for="star-rating-5" title="5 sur 5 étoiles"></label>
                                                                                       <input class="star-rating__input" id="star-rating-4" type="radio" name="rate" value="4">
-                                                                                      <label class="star-rating__ico fa fa-star-o" for="star-rating-4" title="4 out of 5 stars"></label>
+                                                                                      <label class="star-rating__ico fa fa-star-o" for="star-rating-4" title="4 sur 5 étoiles"></label>
                                                                                       <input class="star-rating__input" id="star-rating-3" type="radio" name="rate" value="3">
-                                                                                      <label class="star-rating__ico fa fa-star-o" for="star-rating-3" title="3 out of 5 stars"></label>
+                                                                                      <label class="star-rating__ico fa fa-star-o" for="star-rating-3" title="3 sur 5 étoiles"></label>
                                                                                       <input class="star-rating__input" id="star-rating-2" type="radio" name="rate" value="2">
-                                                                                      <label class="star-rating__ico fa fa-star-o" for="star-rating-2" title="2 out of 5 stars"></label>
+                                                                                      <label class="star-rating__ico fa fa-star-o" for="star-rating-2" title="2 sur 5 étoiles"></label>
                                                                                       <input class="star-rating__input" id="star-rating-1" type="radio" name="rate" value="1">
-																					  <label class="star-rating__ico fa fa-star-o" for="star-rating-1" title="1 out of 5 stars"></label>
+																					  <label class="star-rating__ico fa fa-star-o" for="star-rating-1" title="1 sur 5 étoiles"></label>
 																					  @error('rate')
 																						<span class="text-danger">{{$message}}</span>
 																					  @enderror
@@ -221,23 +211,23 @@
                                                                         </div>
 																		<div class="col-lg-12 col-12">
 																			<div class="form-group">
-																				<label>Write a review</label>
+																				<label>Écrire un commentaire</label>
 																				<textarea name="review" rows="6" placeholder="" ></textarea>
 																			</div>
 																		</div>
 																		<div class="col-lg-12 col-12">
 																			<div class="form-group button5">	
-																				<button type="submit" class="btn">Submit</button>
+																				<button type="submit" class="btn">Soumettre</button>
 																			</div>
 																		</div>
 																	</div>
 																</form>
 																@else 
 																<p class="text-center p-5">
-																	You need to <a href="{{route('login.form')}}" style="color:rgb(54, 54, 204)">Login</a> OR <a style="color:blue" href="{{route('register.form')}}">Register</a>
+																	Vous devez vous <a href="{{route('login.form')}}" style="color:rgb(54, 54, 204)">connecter</a> OU <a style="color:blue" href="{{route('register.form')}}">inscrire</a>
 
 																</p>
-																<!--/ End Form -->
+																<!--/ Fin de formulaire -->
 																@endauth
 																	</div>
 																</div>
@@ -250,8 +240,8 @@
 																				$rate +=$rate
 																			}
 																		@endphp --}}
-																		<h4>{{ceil($product_detail->getReview->avg('rate'))}} <span>(Overall)</span></h4>
-																		<span>Based on {{$product_detail->getReview->count()}} Comments</span>
+																		<h4>{{ceil($product_detail->getReview->avg('rate'))}} <span>(Global)</span></h4>
+																		<span>Basé sur {{$product_detail->getReview->count()}} commentaires</span>
 																	</div>
 																	@foreach($product_detail['getReview'] as $data)
 																	<!-- Single Rating -->
@@ -281,26 +271,25 @@
 																			<p>{{$data->review}}</p>
 																		</div>
 																	</div>
-																	<!--/ End Single Rating -->
+																	<!--/ Fin d'une note unique -->
 																	@endforeach
 																</div>
 																
-																<!--/ End Review -->
+																<!--/ Fin de l'avis -->
 																
 															</div>
 														</div>
 													</div>
 												</div>
-												<!--/ End Reviews Tab -->
+												<!--/ Fin de l'onglet d'avis -->
 											</div>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-					</div>
 		</section>
-		<!--/ End Shop Single -->
+		<!--/ Fin de la section Shop Single -->
 		
 		<!-- Start Most Popular -->
 	<div class="product-area most-popular related-product section">
@@ -308,7 +297,7 @@
             <div class="row">
 				<div class="col-12">
 					<div class="section-title">
-						<h2>Related Products</h2>
+						<h2>Produits similaires</h2>
 					</div>
 				</div>
             </div>
@@ -332,12 +321,12 @@
                                         </a>
                                         <div class="button-head">
                                             <div class="product-action">
-                                                <a data-toggle="modal" data-target="#modelExample" title="Quick View" href="#"><i class=" ti-eye"></i><span>Quick Shop</span></a>
-                                                <a title="Wishlist" href="#"><i class=" ti-heart "></i><span>Add to Wishlist</span></a>
-                                                <a title="Compare" href="#"><i class="ti-bar-chart-alt"></i><span>Add to Compare</span></a>
+                                                <a data-toggle="modal" data-target="#modelExample" title="Quick View" href="#"><i class=" ti-eye"></i><span>Vue rapide</span></a>
+                                                <a title="Wishlist" href="#"><i class=" ti-heart "></i><span>Ajouter à la liste de souhaits</span></a>
+                                                <a title="Compare" href="#"><i class="ti-bar-chart-alt"></i><span>Ajouter pour comparer</span></a>
                                             </div>
                                             <div class="product-action-2">
-                                                <a title="Add to cart" href="#">Add to cart</a>
+                                                <a title="Add to cart" href="#">Ajouter au panier</a>
                                             </div>
                                         </div>
                                     </div>
@@ -355,7 +344,7 @@
                                 </div>
                                 <!-- End Single Product -->
                                 	
-                            @endif
+								@endif
                         @endforeach
                     </div>
                 </div>
@@ -396,7 +385,7 @@
                     </div>
                     <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
                         <div class="quickview-content">
-                            <h2>Flared Shift Dress</h2>
+                            <h2>Robe à volants</h2>
                             <div class="quickview-ratting-review">
                                 <div class="quickview-ratting-wrap">
                                     <div class="quickview-ratting">
@@ -406,10 +395,10 @@
                                         <i class="yellow fa fa-star"></i>
                                         <i class="fa fa-star"></i>
                                     </div>
-                                    <a href="#"> (1 customer review)</a>
+                                    <a href="#"> (1 avis client)</a>
                                 </div>
                                 <div class="quickview-stock">
-                                    <span><i class="fa fa-check-circle-o"></i> in stock</span>
+                                    <span><i class="fa fa-check-circle-o"></i> en stock</span>
                                 </div>
                             </div>
                             <h3>$29.00</h3>
@@ -419,7 +408,7 @@
                             <div class="size">
                                 <div class="row">
                                     <div class="col-lg-6 col-12">
-                                        <h5 class="title">Size</h5>
+                                        <h5 class="title">Taille</h5>
                                         <select>
                                             <option selected="selected">s</option>
                                             <option>m</option>
@@ -428,12 +417,12 @@
                                         </select>
                                     </div>
                                     <div class="col-lg-6 col-12">
-                                        <h5 class="title">Color</h5>
+                                        <h5 class="title">Couleur</h5>
                                         <select>
                                             <option selected="selected">orange</option>
-                                            <option>purple</option>
-                                            <option>black</option>
-                                            <option>pink</option>
+                                            <option>violet</option>
+                                            <option>noir</option>
+                                            <option>rose</option>
                                         </select>
                                     </div>
                                 </div>
@@ -456,12 +445,12 @@
                                 <!--/ End Input Order -->
                             </div>
                             <div class="add-to-cart">
-                                <a href="#" class="btn">Add to cart</a>
+                                <a href="#" class="btn">Ajouter au panier</a>
                                 <a href="#" class="btn min"><i class="ti-heart"></i></a>
                                 <a href="#" class="btn min"><i class="fa fa-compress"></i></a>
                             </div>
                             <div class="default-social">
-                                <h4 class="share-now">Share:</h4>
+                                <h4 class="share-now">Partager:</h4>
                                 <ul>
                                     <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
                                     <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
@@ -476,6 +465,7 @@
         </div>
     </div>
 </div>
+
 <!-- Modal end -->
 
 @endsection

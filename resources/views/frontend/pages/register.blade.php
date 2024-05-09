@@ -1,6 +1,6 @@
 @extends('frontend.layouts.master')
 
-@section('title','E-SHOP || Register Page')
+@section('title','E-SHOP || Page d\'inscription')
 
 @section('main-content')
 	<!-- Breadcrumbs -->
@@ -10,8 +10,8 @@
                 <div class="col-12">
                     <div class="bread-inner">
                         <ul class="bread-list">
-                            <li><a href="{{route('home')}}">Home<i class="ti-arrow-right"></i></a></li>
-                            <li class="active"><a href="javascript:void(0);">Register</a></li>
+                            <li><a href="{{route('home')}}">Accueil<i class="ti-arrow-right"></i></a></li>
+                            <li class="active"><a href="javascript:void(0);">Inscription</a></li>
                         </ul>
                     </div>
                 </div>
@@ -20,21 +20,21 @@
     </div>
     <!-- End Breadcrumbs -->
             
-    <!-- Shop Login -->
+    <!-- Inscription -->
     <section class="shop login section">
         <div class="container">
             <div class="row"> 
                 <div class="col-lg-6 offset-lg-3 col-12">
                     <div class="login-form">
-                        <h2>Register</h2>
-                        <p>Please register in order to checkout more quickly</p>
-                        <!-- Form -->
+                        <h2>Inscription</h2>
+                        <p>Veuillez vous inscrire afin de passer à la caisse plus rapidement</p>
+                        <!-- Formulaire -->
                         <form class="form" method="post" action="{{route('register.submit')}}">
                             @csrf
                             <div class="row">
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label>Your Name<span>*</span></label>
+                                        <label>Votre nom<span>*</span></label>
                                         <input type="text" name="name" placeholder="" required="required" value="{{old('name')}}">
                                         @error('name')
                                             <span class="text-danger">{{$message}}</span>
@@ -43,7 +43,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label>Your Email<span>*</span></label>
+                                        <label>Votre adresse e-mail<span>*</span></label>
                                         <input type="text" name="email" placeholder="" required="required" value="{{old('email')}}">
                                         @error('email')
                                             <span class="text-danger">{{$message}}</span>
@@ -52,7 +52,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label>Your Password<span>*</span></label>
+                                        <label>Votre mot de passe<span>*</span></label>
                                         <input type="password" name="password" placeholder="" required="required" value="{{old('password')}}">
                                         @error('password')
                                             <span class="text-danger">{{$message}}</span>
@@ -61,7 +61,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label>Confirm Password<span>*</span></label>
+                                        <label>Confirmez votre mot de passe<span>*</span></label>
                                         <input type="password" name="password_confirmation" placeholder="" required="required" value="{{old('password_confirmation')}}">
                                         @error('password_confirmation')
                                             <span class="text-danger">{{$message}}</span>
@@ -70,9 +70,9 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group login-btn">
-                                        <button class="btn" type="submit">Register</button>
-                                        <a href="{{route('login.form')}}" class="btn">Login</a>
-                                        OR
+                                        <button class="btn" type="submit">S'inscrire</button>
+                                        <a href="{{route('login.form')}}" class="btn">Se connecter</a>
+                                        OU
                                         <a href="{{route('login.redirect','facebook')}}" class="btn btn-facebook"><i class="ti-facebook"></i></a>
                                         <a href="{{route('login.redirect','github')}}" class="btn btn-github"><i class="ti-github"></i></a>
                                         <a href="{{route('login.redirect','google')}}" class="btn btn-google"><i class="ti-google"></i></a>
@@ -80,13 +80,13 @@
                                 </div>
                             </div>
                         </form>
-                        <!--/ End Form -->
+                        <!--/ End Formulaire -->
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    <!--/ End Login -->
+    <!--/ End Inscription -->
 @endsection
 
 @push('styles')
