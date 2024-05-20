@@ -24,6 +24,7 @@ class AdminController extends Controller
      {
        $array[++$key] = [$value->day_name, $value->count];
      }
+
     //  return $data;
      return view('backend.index')->with('users', json_encode($array));
     }

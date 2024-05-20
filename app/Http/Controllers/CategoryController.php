@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\DetailCategory;
+use App\Models\BodyCategory;
 use Illuminate\Support\Str;
+use DB;
 
 class CategoryController extends Controller
 {
@@ -17,6 +20,8 @@ class CategoryController extends Controller
     {
         $category=Category::getAllCategory();
         // return $category;
+
+
         return view('backend.category.index')->with('categories',$category);
     }
 
@@ -56,7 +61,7 @@ class CategoryController extends Controller
         }
         $data['slug']=$slug;
         $data['is_parent']=$request->input('is_parent',0);
-        // return $data;   
+        // return $data;
         $status=Category::create($data);
         if($status){
             request()->session()->flash('success','Category successfully added');
@@ -137,7 +142,7 @@ class CategoryController extends Controller
         $child_cat_id=Category::where('parent_id',$id)->pluck('id');
         // return $child_cat_id;
         $status=$category->delete();
-        
+
         if($status){
             if(count($child_cat_id)>0){
                 Category::shiftChild($child_cat_id);
@@ -160,6 +165,132 @@ class CategoryController extends Controller
         }
         else{
             return response()->json(['status'=>true,'msg'=>'','data'=>$child_cat]);
+        }
+    }
+
+
+    public function DetailCategory()
+    {
+        $DetailCategory = DB::table('detailcategory as d')
+        ->join('categories as c','c.id','=','d.idcategory')
+        ->select('d.id','d.name','c.title as nameCategory','d.title','c.id as idcategory')
+        ->get();
+
+        return view('backend.DetailCategory.index')
+        ->with('DetailCategory',$DetailCategory);
+    }
+
+    public function PageAddLigneDetailCategory()
+    {
+        $Category = DB::table('categories')->get();
+
+        return view('backend.DetailCategory.createDetailCategory')->with('Category',$Category);
+    }
+
+    public function ListDetailCategory()
+    {
+        $Data = DB::table('categories as c')
+        ->join('detailcategory as d','d.idcategory','=','c.id')
+        ->select("d.name",'c.title')
+        ->get();
+        return response()->json([
+            'status'    => 200,
+            'data'      => $Data,
+        ]);
+    }
+
+    public function StoreDetailCategory(Request $request)
+    {
+        try
+        {
+
+            $DetailCategory = DetailCategory::create([
+                'name'   => $request->name,
+                'idcategory' => $request->category,
+                'title' => $request->name,
+            ]);
+            return response()->json([
+                'status'    => 200,
+
+            ]);
+        }
+        catch (\Throwable $th)
+        {
+            throw $th;
+        }
+    }
+
+    public function BodyCategory()
+    {
+        $data = DB::table('detailcategory as d')
+        ->join('bodycategory as b','b.idHeaderCategory','=','d.id')
+        ->select('b.name as bodyname','d.name as headename','b.id')
+        ->get();
+        $headerCategory = DetailCategory::all();
+        return view('backend.BodyCategory.index')
+        ->with('data',$data)
+        ->with('headerCategory',$headerCategory);
+    }
+
+    public function StoreBodyCategorys(Request $request)
+    {
+        try
+        {
+            $BodyCategory = BodyCategory::create([
+                'name'    => $request->name,
+                'idHeaderCategory'    => $request->header
+            ]);
+
+            return response()->json([
+                'status'    => 200,
+
+            ]);
+        }
+        catch (\Throwable $th)
+        {
+            throw $th;
+        }
+    }
+
+    public function getBodyAndHeadCategory(Request $request)
+    {
+        try
+        {
+            $Data = DB::select("select *,b.id as idbody from categories c , detailcategory d , bodycategory b
+                                where c.id = d.idcategory and d.id = b.idHeaderCategory and c.id = ?",[$request->id]);
+
+            $result = [];
+
+            foreach ($Data as $item) {
+                $title = $item->title;
+                $name = $item->name;
+                $id = $item->idbody;
+
+                if (array_key_exists($title, $result)) {
+                    $result[$title][] = [
+                        'name' => $name,
+                        'id' => $id
+                    ];
+                } else {
+                    $result[$title] = [
+                        [
+                            'name' => $name,
+                            'id' => $id
+                        ]
+                    ];
+                }
+            }
+
+
+
+            return response()->json([
+                'status' => 200,
+                'data'   => $result
+            ]);
+        }
+        catch (\Throwable $th)
+        {
+            throw $th;
         }
     }
 }

@@ -68,6 +68,37 @@
           </div>
         </div>
     </li>
+
+    {{-- Detail Category --}}
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#DetailcategoryCollapse" aria-expanded="true" aria-controls="DetailcategoryCollapse">
+          <i class="fas fa-sitemap"></i>
+          <span> Ligne Detail Category</span>
+        </a>
+        <div id="DetailcategoryCollapse" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Ligne Category Options:</h6>
+            <a class="collapse-item" href="{{url('DetailCategory')}}">Detail Category</a>
+            <a class="collapse-item" href="">Add Detail Category</a>
+          </div>
+        </div>
+    </li>
+
+
+    {{-- Body Category --}}
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#BodycategoryCollapse" aria-expanded="true" aria-controls="DetailcategoryCollapse">
+          <i class="fas fa-sitemap"></i>
+          <span> Body Detail Category</span>
+        </a>
+        <div id="BodycategoryCollapse" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Body Category Options:</h6>
+            <a class="collapse-item" href="{{url('BodyCategory')}}">Body  Category</a>
+            <a class="collapse-item" href="">Add Detail Category</a>
+          </div>
+        </div>
+    </li>
     {{-- Products --}}
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#productCollapse" aria-expanded="true" aria-controls="productCollapse">
@@ -127,7 +158,7 @@
             <i class="fas fa-comments"></i>
             <span>Reviews</span></a>
     </li>
-    
+
 
     <!-- Divider -->
     <hr class="sidebar-divider">

@@ -15,6 +15,7 @@
     use App\Http\Controllers\PayPalController;
     use App\Http\Controllers\NotificationController;
     use App\Http\Controllers\HomeController;
+    use App\Http\Controllers\CategoryController;
     use \UniSharp\LaravelFilemanager\Lfm;
 
     /*
@@ -80,6 +81,7 @@
     Route::get('/wishlist', function () {
         return view('frontend.pages.wishlist');
     })->name('wishlist');
+
     Route::get('/wishlist/{slug}', [WishlistController::class, 'wishlist'])->name('add-to-wishlist')->middleware('user');
     Route::get('wishlist-delete/{id}', [WishlistController::class, 'wishlistDelete'])->name('wishlist-delete');
     Route::post('cart/order', [OrderController::class, 'store'])->name('cart.order');
@@ -201,3 +203,13 @@
     Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
         Lfm::routes();
     });
+
+    Route::get('DetailCategory'        , [CategoryController::class,'DetailCategory']);
+    Route::get('PageAddLigneDetailCategory'   ,[CategoryController::class,'PageAddLigneDetailCategory']);
+    Route::get('getListDetailCategory'    ,[CategoryController::class,'ListDetailCategory']);
+    Route::post('StoreDetailCategory'    ,[CategoryController::class,'StoreDetailCategory']);
+
+    Route::get('BodyCategory'           ,[CategoryController::class,'BodyCategory']);
+    Route::post('StoreBodyCategorys'           ,[CategoryController::class,'StoreBodyCategorys']);
+    Route::get('getBodyAndHeadCategory'           ,[CategoryController::class,'getBodyAndHeadCategory']);
+

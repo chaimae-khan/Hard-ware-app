@@ -61,6 +61,7 @@
                             </ul>
                         </div>
                         <!--/ End Single Widget -->
+
 <!-- Shop By Price -->
 <div class="single-widget range">
     <h3 class="title">Shop by Price</h3>

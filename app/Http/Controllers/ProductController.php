@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\FilterProduct;
 use App\Models\Brand;
 
 use Illuminate\Support\Str;
@@ -44,7 +45,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        // return $request->all();
+        //return $request->all();
         $this->validate($request,[
             'title'=>'string|required',
             'summary'=>'string|required',
@@ -80,6 +81,14 @@ class ProductController extends Controller
         // return $size;
         // return $data;
         $status=Product::create($data);
+
+        foreach($request->BodyCategory as $item)
+        {
+            $FilterProduct  = FilterProduct::create([
+                'idproduct'   => $status->id,
+                'bodyCategory' =>$item
+            ]);
+        }
         if($status){
             request()->session()->flash('success','Product Successfully added');
         }
@@ -176,7 +185,7 @@ class ProductController extends Controller
     {
         $product=Product::findOrFail($id);
         $status=$product->delete();
-        
+
         if($status){
             request()->session()->flash('success','Product successfully deleted');
         }

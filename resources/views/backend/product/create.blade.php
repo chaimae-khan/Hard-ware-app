@@ -34,7 +34,7 @@
 
         <div class="form-group">
           <label for="is_featured">Is Featured</label><br>
-          <input type="checkbox" name='is_featured' id='is_featured' value='1' checked> Yes                        
+          <input type="checkbox" name='is_featured' id='is_featured' value='1' checked> Yes
         </div>
               {{-- {{$categories}} --}}
 
@@ -48,6 +48,11 @@
           </select>
         </div>
 
+        {{-- belan jadid --}}
+        <div class="row" style="display:none" id="sectionDetailProduct">
+
+        </div>
+
         <div class="form-group d-none" id="child_cat_div">
           <label for="child_cat_id">Sub Category</label>
           <select name="child_cat_id" id="child_cat_id" class="form-control">
@@ -57,6 +62,7 @@
               @endforeach --}}
           </select>
         </div>
+
 
         <div class="form-group">
           <label for="price" class="col-form-label">Price(NRS) <span class="text-danger">*</span></label>
@@ -128,7 +134,7 @@
           <span class="text-danger">{{$message}}</span>
           @enderror
         </div>
-        
+
         <div class="form-group">
           <label for="status" class="col-form-label">Status <span class="text-danger">*</span></label>
           <select name="status" class="form-control">
@@ -146,7 +152,78 @@
       </form>
     </div>
 </div>
+<meta name="csrf-token" content="{{ csrf_token() }}">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#cat_id').on('change',function(e)
+        {
+            e.preventDefault();
+            var id = $(this).val();
+            $.ajax({
+                type: "get",
+                url: "{{url('getBodyAndHeadCategory')}}",
+                data:
+                {
+                    id : id,
+                },
+                dataType: "json",
+                success: function (response)
+                {
+                    if (response.status == 200) {
+                        $('#sectionDetailProduct').empty();
+                        $("#sectionDetailProduct").css('display', 'block');
+                        let cardCounter = 0;
+                        let rowOpened = false;
 
+                        $.each(response.data, function (category, items) {
+
+                            if (cardCounter % 3 === 0) {
+                                if (rowOpened) {
+                                    $('#sectionDetailProduct').append('</div>');
+                                }
+                                $('#sectionDetailProduct').append('<div class="row">');
+                                rowOpened = true;
+                            }
+
+                            let card = `<div class="col-sm-12 col-md-12 col-xl-4">
+                                            <div class="card mr-2" style="width:18rem;">
+                                                <h5 class="card-title border p-2 text-center">${category}</h5>
+                                                <div class="card-body">`;
+
+                            $.each(items, function (index, item) {
+                                card += `<div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="${category}_${index}" name="BodyCategory[]" value="${item.id}">
+                                            <label class="form-check-label" for="${category}_${index}">
+                                                ${item.name}
+                                            </label>
+                                        </div>`;
+                            });
+
+                            card += `       </div>
+                                            </div>
+                                        </div>`;
+
+                            $('#sectionDetailProduct .row:last-child').append(card);
+                            cardCounter++;
+
+
+                            if (cardCounter % 3 === 0 || cardCounter === response.data.length) {
+                                $('#sectionDetailProduct').append('</div>');
+                                rowOpened = false;
+                            }
+                        });
+
+                        if (rowOpened) {
+                            $('#sectionDetailProduct').append('</div>');
+                        }
+                    }
+
+                }
+            });
+        });
+    });
+</script>
 @endsection
 
 @push('styles')
