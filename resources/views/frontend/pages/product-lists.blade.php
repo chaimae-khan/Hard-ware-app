@@ -189,7 +189,7 @@
 							</div>
 							<div class="row" id="containerListProduct">
 								@if(count($products))
-									{{-- @foreach($products as $product)
+									@foreach($products as $product)
 
 										<div class="col-12">
 											<div class="row">
@@ -235,7 +235,7 @@
 											</div>
 										</div>
 
-									@endforeach --}}
+									@endforeach
 								@else
 									<h4 class="text-warning" style="margin:100px auto;">There are no products.</h4>
 								@endif
