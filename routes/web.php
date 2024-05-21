@@ -16,6 +16,7 @@
     use App\Http\Controllers\NotificationController;
     use App\Http\Controllers\HomeController;
     use App\Http\Controllers\CategoryController;
+    use App\Http\Controllers\ProductController;
     use \UniSharp\LaravelFilemanager\Lfm;
 
     /*
@@ -212,4 +213,4 @@
     Route::get('BodyCategory'           ,[CategoryController::class,'BodyCategory']);
     Route::post('StoreBodyCategorys'           ,[CategoryController::class,'StoreBodyCategorys']);
     Route::get('getBodyAndHeadCategory'           ,[CategoryController::class,'getBodyAndHeadCategory']);
-
+    Route::get('filterProduct'                ,[ProductController::class,'filterProduct']);

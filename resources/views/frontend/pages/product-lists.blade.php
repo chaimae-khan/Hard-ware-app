@@ -187,11 +187,10 @@
 									<!--/ End Shop Top -->
 								</div>
 							</div>
-							<div class="row">
+							<div class="row" id="containerListProduct">
 								@if(count($products))
-									@foreach($products as $product)
-									 	{{-- {{$product}} --}}
-										<!-- Start Single List -->
+									{{-- @foreach($products as $product)
+
 										<div class="col-12">
 											<div class="row">
 												<div class="col-lg-4 col-md-6 col-sm-6">
@@ -227,7 +226,7 @@
 																<del>${{number_format($product->price,2)}}</del>
 															</div>
 															<h3 class="title"><a href="{{route('product-detail',$product->slug)}}">{{$product->title}}</a></h3>
-														{{-- <p>{!! html_entity_decode($product->summary) !!}</p> --}}
+
 														</div>
 														<p class="des pt-2">{!! html_entity_decode($product->summary) !!}</p>
 														<a href="javascript:void(0)" class="btn cart" data-id="{{$product->id}}">Buy Now!</a>
@@ -235,8 +234,8 @@
 												</div>
 											</div>
 										</div>
-										<!-- End Single List -->
-									@endforeach
+
+									@endforeach --}}
 								@else
 									<h4 class="text-warning" style="margin:100px auto;">There are no products.</h4>
 								@endif
@@ -391,6 +390,83 @@
 @push('scripts')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 
+<script>
+    $(document).ready(function () {
+
+        $(document).on('change', '.form-check-input', function ()
+        {
+            var checkedValues = [];
+            $('.form-check-input').each(function ()
+            {
+                if ($(this).is(':checked'))
+                {
+                    checkedValues.push($(this).val());
+                }
+            });
+            $.ajax({
+                type: "get",
+                url: "{{(url('filterProduct'))}}",
+                data:
+                {
+                    ids   : checkedValues,
+                },
+                dataType: "json",
+                success: function (response)
+                {
+                    if(response.status == 200)
+                    {
+                        $('#containerListProduct').empty();
+                        $.each(response.data, function(index, product) {
+                            var photo = product.photo.split(',');
+                            var after_discount = (product.price - (product.price * product.discount) / 100);
+
+                            var html = '<div class="col-12">' +
+                                '<div class="row">' +
+                                '<div class="col-lg-4 col-md-6 col-sm-6">' +
+                                '<div class="single-product">' +
+                                '<div class="product-img">' +
+                                '<a href="' + product.route + '">' +
+                                '<img class="default-img" src="' + photo[0] + '" alt="' + photo[0] + '">' +
+                                '<img class="hover-img" src="' + photo[0] + '" alt="' + photo[0] + '">' +
+                                '</a>' +
+                                '<div class="button-head">' +
+                                '<div class="product-action">' +
+                                '<a data-toggle="modal" data-target="#' + product.id + '" title="Quick View" href="#"><i class=" ti-eye"></i><span>Quick Shop</span></a>' +
+                                '<a title="Wishlist" href="' + product.wishlist_route + '" class="wishlist" data-id="' + product.id + '"><i class=" ti-heart "></i><span>Add to Wishlist</span></a>' +
+                                '</div>' +
+                                '<div class="product-action-2">' +
+                                '<a title="Add to cart" href="' + product.cart_route + '">Add to cart</a>' +
+                                '</div>' +
+                                '</div>' +
+                                '</div>' +
+                                '</div>' +
+                                '<div class="col-lg-8 col-md-6 col-12">' +
+                                '<div class="list-content">' +
+                                '<div class="product-content">' +
+                                '<div class="product-price">' +
+                                '<span>$' + parseFloat(after_discount).toFixed(2) + '</span>' +
+                                '<del>$' + parseFloat(product.price).toFixed(2) + '</del>' +
+                                '</div>' +
+                                '<h3 class="title"><a href="' + product.route + '">' + product.title + '</a></h3>' +
+                                '</div>' +
+                                '<p class="des pt-2">' + product.summary + '</p>' +
+                                '<a href="javascript:void(0)" class="btn cart" data-id="' + product.id + '">Buy Now!</a>' +
+                                '</div>' +
+                                '</div>' +
+                                '</div>' +
+                                '</div>' +
+                                '</div>';
+
+                            $('#containerListProduct').append(html);
+                        });
+                    }
+                }
+            });
+
+
+        });
+    });
+</script>
     {{-- <script>
         $('.cart').click(function(){
             var quantity=1;

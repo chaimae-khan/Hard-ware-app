@@ -7,7 +7,7 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Models\FilterProduct;
 use App\Models\Brand;
-
+use DB;
 use Illuminate\Support\Str;
 
 class ProductController extends Controller
@@ -193,5 +193,21 @@ class ProductController extends Controller
             request()->session()->flash('error','Error while deleting product');
         }
         return redirect()->route('product.index');
+    }
+
+    public function filterProduct(Request $request)
+    {
+        $ids = $request->ids;
+        if(!is_null($ids))
+        {
+            $idsImplode = implode(',', $ids);
+            $products    = DB::select("select p.*,c.title from products p ,filterproduct f,categories c  where p.id = f.idproduct and p.cat_id =c.id and f.id in(".$idsImplode.") group by p.id");
+
+            return response()->json([
+                'status'   => 200,
+                'data'     => $products
+            ]);
+        }
+
     }
 }
